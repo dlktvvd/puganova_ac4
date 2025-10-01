@@ -266,3 +266,47 @@ void load_data(Pipe& pipe, CompressorStation& station) {
     file.close();
     cout << "Data loaded successfully from pipeline_data.txt\n";
 }
+
+// функция обработки выбора пользователя и вызова соответствующих функций
+void process_user_choice(int choice, Pipe& pipe, CompressorStation& station) {
+    switch (choice) {
+    case 1:
+        create_pipe(pipe);
+        break;
+    case 2:
+        create_compressor_station(station);
+        break;
+    case 3:
+        display_objects(pipe, station);
+        break;
+    case 4:
+        edit_pipe_repair(pipe);
+        break;
+    case 5:
+        manage_station_workshops(station);
+        break;
+    case 6:
+        save_data(pipe, station);
+        break;
+    case 7:
+        load_data(pipe, station);
+        break;
+    case 0:
+        cout << "Exiting program. Goodbye!\n";
+        exit(0);
+    default:
+        cout << "Invalid choice. Please try again.\n";
+    }
+}
+
+// главная функция программы
+int main() {
+    Pipe main_pipe;
+    CompressorStation main_station;
+
+    while (true) {
+        display_main_menu();
+        int choice = get_valid_input<int>("Enter your choice: ");
+        process_user_choice(choice, main_pipe, main_station);
+    }
+}
