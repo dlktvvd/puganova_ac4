@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="puganova_c++/puganova_c++.vcxproj" />
+  <Project Path="puganova_c++/puganova_c++.vcxproj" Id="5e0642bc-d523-4aca-9358-07eb4564caa7" />
 </Solution>
