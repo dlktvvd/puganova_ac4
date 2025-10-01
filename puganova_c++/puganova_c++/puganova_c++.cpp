@@ -78,7 +78,7 @@ void create_pipe(Pipe& pipe) {
     cout << "Pipe created successfully!\n";
 }
 
-// Функция создания новой компрессорной станции
+// функция создания новой компрессорной станции
 void create_compressor_station(CompressorStation& station) {
     cout << "\n--- Create New Compressor Station ---\n";
     cout << "Enter station name: ";
@@ -188,4 +188,81 @@ void manage_station_workshops(CompressorStation& station) {
     default:
         cout << "Invalid selection.\n";
     }
+}
+
+// вспомогательная функция для сохранения данных трубы в файл
+void save_pipe_to_file(const Pipe& pipe, ofstream& file) {
+    file << "PIPE\n";
+    file << pipe.kilometer_mark << "\n";
+    file << pipe.length_km << "\n";
+    file << pipe.diameter_mm << "\n";
+    file << pipe.under_repair << "\n";
+}
+
+// вспомогательная функция для сохранения данных станции в файл
+void save_station_to_file(const CompressorStation& station, ofstream& file) {
+    file << "STATION\n";
+    file << station.name << "\n";
+    file << station.total_workshops << "\n";
+    file << station.working_workshops << "\n";
+    file << station.station_class << "\n";
+}
+
+// основная функция сохранения всех данных в файл
+void save_data(const Pipe& pipe, const CompressorStation& station) {
+    ofstream file("pipeline_data.txt");
+    if (!file.is_open()) {
+        cout << "Error: Could not open file for writing.\n";
+        return;
+    }
+
+    if (!pipe.kilometer_mark.empty()) {
+        save_pipe_to_file(pipe, file);
+    }
+
+    if (!station.name.empty()) {
+        save_station_to_file(station, file);
+    }
+
+    file.close();
+    cout << "Data saved successfully to pipeline_data.txt\n";
+}
+
+// вспомогательная функция для загрузки данных трубы из файла
+void load_pipe_from_file(Pipe& pipe, ifstream& file) {
+    getline(file, pipe.kilometer_mark);
+    file >> pipe.length_km >> pipe.diameter_mm >> pipe.under_repair;
+    file.ignore();
+}
+
+// вспомогательная функция для загрузки данных станции из файла
+void load_station_from_file(CompressorStation& station, ifstream& file) {
+    getline(file, station.name);
+    file >> station.total_workshops >> station.working_workshops >> station.station_class;
+    file.ignore();
+}
+
+// основная функция загрузки всех данных из файла
+void load_data(Pipe& pipe, CompressorStation& station) {
+    ifstream file("pipeline_data.txt");
+    if (!file.is_open()) {
+        cout << "Error: Could not open file for reading.\n";
+        return;
+    }
+
+    string object_type;
+    pipe.kilometer_mark = "";
+    station.name = "";
+
+    while (getline(file, object_type)) {
+        if (object_type == "PIPE") {
+            load_pipe_from_file(pipe, file);
+        }
+        else if (object_type == "STATION") {
+            load_station_from_file(station, file);
+        }
+    }
+
+    file.close();
+    cout << "Data loaded successfully from pipeline_data.txt\n";
 }
