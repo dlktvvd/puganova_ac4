@@ -8,17 +8,17 @@ using namespace std;
 // структура для представления трубопровода
 struct Pipe {
     string kilometer_mark;
-    double length_km;
-    double diameter_mm;
-    bool under_repair;
+    double length_km=0;
+    double diameter_mm=0;
+    bool under_repair=false;
 };
 
 // структура для представления компрессорной станции
 struct CompressorStation {
     string name;
-    int total_workshops;
-    int working_workshops;
-    int station_class;
+    int total_workshops=0;
+    int working_workshops=0;
+    int station_class=0;
 };
 
 // функция для безопасного ввода данных с проверкой корректности
@@ -52,6 +52,8 @@ void display_main_menu() {
     cout << "5. Manage Station Workshops\n"; // управление цехами станции
     cout << "6. Save Data\n";
     cout << "7. Load Data\n";
+    cout << "8. Save Pipe\n";
+    cout << "9. Save Station\n";
     cout << "0. Exit\n";
     cout << "------------------------\n";
 }
@@ -108,7 +110,7 @@ void create_compressor_station(CompressorStation& station) {
 }
 
 // функция отображения всех созданных объектов
-void display_objects(const Pipe& pipe, const CompressorStation& station) {
+void display_objects(const Pipe& pipe, const CompressorStation& station) {//!!!
     cout << "\n--- CURRENT OBJECTS ---\n";
 
     // отображение информации о трубе, если она создана
@@ -241,14 +243,14 @@ void save_data(const Pipe& pipe, const CompressorStation& station) {
 void load_pipe_from_file(Pipe& pipe, ifstream& file) {
     getline(file, pipe.kilometer_mark);
     file >> pipe.length_km >> pipe.diameter_mm >> pipe.under_repair;
-    file.ignore();
+    //file.ignore();//!!
 }
 
 // вспомогательная функция для загрузки данных станции из файла
 void load_station_from_file(CompressorStation& station, ifstream& file) {
     getline(file, station.name);
     file >> station.total_workshops >> station.working_workshops >> station.station_class;
-    file.ignore();
+    //file.ignore();//!!!
 }
 
 // основная функция загрузки всех данных из файла
@@ -300,8 +302,26 @@ void process_user_choice(int choice, Pipe& pipe, CompressorStation& station) {
     case 7:
         load_data(pipe, station);
         break;
+    case 8: {
+        ofstream file("pipe.txt");
+        if (file.is_open()) {
+            save_pipe_to_file(pipe, file);
+            file.close();
+            cout << "Pipe saved to pipe_only.txt\n";
+        }
+        break;
+    }
+    case 9: {
+        ofstream file("station.txt");
+        if (file.is_open()) {
+            save_station_to_file(station, file);
+            file.close();
+            cout << "Station saved to station_only.txt\n";
+        }
+        break;
+    }
     case 0:
-        cout << "Exiting program. Goodbye!\n";
+        cout << "Exiting program.\n";
         exit(0);
     default:
         cout << "Invalid choice. Please try again.\n"; // неверный ввод
