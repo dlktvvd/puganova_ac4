@@ -43,9 +43,8 @@ T get_valid_input(const string& prompt) {
 
 // функция отображения главного меню программы
 void display_main_menu() {
-    cout << "\n========================\n";
     cout << "   PIPELINE SYSTEM MENU\n";
-    cout << "========================\n";
+    cout << "------------------------\n";
     cout << "1. Add Pipe\n";
     cout << "2. Add Compressor Station\n";
     cout << "3. View All Objects\n";
@@ -54,7 +53,7 @@ void display_main_menu() {
     cout << "6. Save Data\n";
     cout << "7. Load Data\n";
     cout << "0. Exit\n";
-    cout << "========================\n";
+    cout << "------------------------\n";
 }
 
 // функция создания новой трубы с вводом всех параметров
