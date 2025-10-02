@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <fstream> // для работы с файлами
-#include <string> // для работы сос троками
+#include <string> // для работы со строками
 #include <limits> // для проверки границ чисел
 
 using namespace std;
